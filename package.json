@@ -1,0 +1,56 @@
+{
+  "name": "music-app",
+  "version": "1.0.0",
+  "description": "App for streaming local music",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Rwanda-Music-app/Backend-app.git"
+  },
+  "nodemonConfig": {
+    "watch": [
+      "*"
+    ],
+    "ignore": [
+      "/node_modules",
+      "**/__tests__/**",
+      "*.test.js",
+      "*.spec.js",
+      "/package.json"
+    ]
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ]
+  },
+  "keywords": [
+    "App",
+    "Streaming",
+    "audio",
+    "file"
+  ],
+  "author": "Crispy and Alain",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Crispy-lang/Music/issues"
+  },
+  "homepage": "https://github.com/Crispy-lang/Music#readme",
+  "dependencies": {
+    "@babel/cli": "^7.10.1",
+    "@babel/core": "^7.10.2",
+    "@babel/node": "^7.10.3",
+    "@babel/preset-env": "^7.10.2",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-graphql": "^0.9.0",
+    "graphql": "^15.2.0",
+    "mongoose": "^5.9.19"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  }
+}
