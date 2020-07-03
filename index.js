@@ -1,14 +1,15 @@
 import express from 'express'
+import bodyParser from 'body-parser'
+import { createServer } from 'http'
 import logger from 'morgan'
 import mongoose from 'mongoose'
-import graphQLHTTP from 'express-graphql'
+import { graphqlExpress, graphiqlExpress } from 'graphql-server-express'
 import schema from './schema.js'
-
 
 
 const app = express()
 
-// Mongo DB URL
+// Mongo DB URL 
 const mongoDB = "mongodb://127.0.0.1:27017/music"
 
 //Connectiong to the database
@@ -24,10 +25,16 @@ db.on('orrer', console.error.bind(console, 'Mongo DB connection Error'))
 // Add logging middleware
 app.use(logger('dev'))
 
+// Add body parser
+app.use(bodyParser.json())
+
 // Add GraphQL
-app.use('/graphql', graphQLHTTP({
+app.use('/graphql', graphqlExpress({
 	schema,
-	graphiql: true
+}))
+
+app.use('/graphiql', graphiqlExpress({
+	endpointURL: '/graphql'
 }))
 
 app.get('/index', function(req, res){
@@ -38,6 +45,9 @@ app.get('/index', function(req, res){
 
 let port = 2345
 
-app.listen(port, ()=> {
+const server = createServer(app)
+
+server.listen(port, err => {
+	if(err) throw err
 	console.log('App running on port:', port)
 })

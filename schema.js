@@ -5,14 +5,14 @@ import {
 	GraphQLID,
 	GraphQLList,
 	GraphQLNonNull,
-	GraphQLInt
+	GraphQLInt,
 } from 'graphql'
 
 import User from './model'
+import subscriptions from './subscriptions/index'
 
 
-
-const UserType = new GraphQLObjectType({
+exports UserType = new GraphQLObjectType({
 	name: 'User',
 	fields:{
 		id: {
@@ -114,7 +114,7 @@ const mutationType = new GraphQLObjectType({
 			args: {
 				id: { type: GraphQLNonNull(GraphQLString) }
 			},
-			resolve: (root, args, context, info) => {
+			resolve: (root, args, context, info) => { 
 				return new Promise((resolve, reject) =>{
 					User.deleteOne({_id: args.id}, function(err, delUser){
 						if (err) reject(err)
@@ -126,8 +126,15 @@ const mutationType = new GraphQLObjectType({
 	}
 })
 
+const subscription = new GraphQLObjectType({
+	name: 'Subscriptions',
+	description: '...',
+	fields: subscriptions
+})
+
 
 export default new GraphQLSchema({
 	query: QueryType,
-	mutation: mutationType
+	mutation: mutationType,
+	subscription: subscription
 })
