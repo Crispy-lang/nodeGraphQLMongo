@@ -102,9 +102,11 @@ const mutationType = new GraphQLObjectType({
 			},
 			resolve: (root, args, context, info) => {
 				const {id, ...update} = args
-				User.findByIdAndUpdate(id, update,(err, user) => {
-					if(err) throw new Error('Err Exist')
-					return user
+				return new Promise((resolve, reject) =>{
+					User.findByIdAndUpdate(id, update,{new: true},(err, user) => {
+						if(err) throw new Error('Err Exist')
+						resolve(user)
+					})
 				})
 			}
 		},deleleUser: {
